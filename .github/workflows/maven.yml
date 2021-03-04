@@ -12,6 +12,7 @@ on:
 jobs:
   build:
 
+
     runs-on: ubuntu-latest
 
     steps:
@@ -22,3 +23,11 @@ jobs:
         java-version: 1.14
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
+  - name: install ssh key
+      uses: webfactory/ssh-agent@v0.4.1
+      with:
+        ssh-private-key: ${{ secrets.BUILDACTION }}
+      - name: create .ssh/known_hosts
+        run: |
+          ssh-keyscan -H -t rsa -v 158.101.170.22  >> ~/.ssh/known_hosts
