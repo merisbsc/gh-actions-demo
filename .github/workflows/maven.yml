@@ -12,7 +12,6 @@ on:
 jobs:
   build:
 
-
     runs-on: ubuntu-latest
 
     steps:
@@ -31,3 +30,7 @@ jobs:
       - name: create .ssh/known_hosts
         run: |
           ssh-keyscan -H -t rsa -v 158.101.170.22  >> ~/.ssh/known_hosts
+      - name: copy binaries to oravm
+        run: |
+          ls -l target/
+          scp target/gh-actions-demo-1.0.0-SNAPSHOT-runner.jar ${{ secrets.ORAVM_USER }}@${{ secrets.ORAVM_IP }}:
